@@ -5,7 +5,7 @@ image: node:latest
   - pwd
   - echo "$HOME"
   - ls -a
-  - cp $FIREBASE_SERVICE_ACCOUNT service-account.json
+  - cp $FIREBASE_SERVICE_ACCOUNT ./service-account.json
   - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
   - yarn
   - yarn build
