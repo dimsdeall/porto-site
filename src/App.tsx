@@ -1,5 +1,5 @@
 import "./App.css";
-import { Button, LoadingCowardly } from "./components/atoms";
+import { LoadingCowardly } from "./components/atoms";
 
 function App() {
   return (

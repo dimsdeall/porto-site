@@ -14,11 +14,11 @@ export const colorLabels: Record<ColorID, string> = {
 type Props = {
   children?: React.ReactNode;
   [padding: number]: 12 | 32;
-  color: typeof colorLabels[ColorID]
+  color: ColorID
 };
 
-function Button({ children , color}: Props) {
+function ButtonComp({ children , color}: Props) {
   return <button className={color}>{children}</button>;
 }
 
-export default Button;
+export default ButtonComp;

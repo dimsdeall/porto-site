@@ -2,6 +2,9 @@ image: node:latest
 
 .deploy: &deploy
   - npm install -g firebase-tools
+  - pwd
+  - firebase logout
+  - ls -a
   - cp $FIREBASE_SERVICE_ACCOUNT service-account.json
   - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
   - yarn

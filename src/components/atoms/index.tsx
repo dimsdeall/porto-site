@@ -1,5 +1,5 @@
-import Button from "./Button";
+import ButtonComp from "./ButtonComp";
 import LoadingCowardly from "./LoadingCowardly";
 
 
-export { LoadingCowardly, Button };
+export { LoadingCowardly, ButtonComp };
