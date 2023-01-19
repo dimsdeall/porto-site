@@ -3,7 +3,9 @@ image: node:latest
 .deploy: &deploy
   - npm install -g firebase-tools
   - echo $FIREBASE_ACCOUNT
-  - cp $FIREBASE_ACCOUNT service-account.json
+  - echo $FIREBASE_TARGET_HOSTING
+  - echo "$FIREBASE_TARGET_HOSTING"
+  - cp $FIREBASE_ACCOUNT "$PWD/service-account.json"
   # - pwd
   # - firebase logout
   # - ls -a
