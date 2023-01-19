@@ -2,13 +2,14 @@ image: node:latest
 
 .deploy: &deploy
   - npm install -g firebase-tools
-  # - cp $FIREBASE_SERVICE_ACCOUNT service-account.json
+  - echo $FIREBASE_SERVICE_ACCOUNT
+  - cp $FIREBASE_SERVICE_ACCOUNT service-account.json
   # - pwd
   # - firebase logout
   # - ls -a
   # - firebase use $FIREBASE_PROJECT_ID --token $FIREBASE_TOKEN
-  # - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
-  - export GOOGLE_APPLICATION_CREDENTIALS="$FIREBASE_SERVICE_ACCOUNT"
+  - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
+  # - export GOOGLE_APPLICATION_CREDENTIALS="$FIREBASE_SERVICE_ACCOUNT"
   # - printenv
   - yarn
   - yarn build
