@@ -14,8 +14,9 @@
 }
 
 .background-layer {
-  background-image: url(./asset/img/background.png);
+  background-image: url(../../asset/img/background.png);
   background-size: cover;
   background-repeat: repeat-y;
   background-color: #00061b;
+  min-height: 100vh;
 }
