@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "build",
-    "site": "home-keuangan-dimsdeall",
+    "site": "dimsdeall-home-project",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
