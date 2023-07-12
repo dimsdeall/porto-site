@@ -9,3 +9,9 @@
 .my-custom-style {
   /* ... */
 }
+
+@layer base {
+  body {
+    @apply bg-background text-white;
+  }
+}

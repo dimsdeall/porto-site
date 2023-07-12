@@ -29,6 +29,26 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+        "fade-in": "fade 2s ease-in-out",
+        "slide-up": "bottom-up 1s",
+        "slide-right": "right-to-left 1s",
+      },
+      keyframes: {
+        "fade": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        "bottom-up": {
+          "0%": { transform: "translateY(100%)", opacity: 0 },
+          "100%": { transform: "translateY(0%)", opacity: 1 },
+        },
+        "right-to-left": {
+          "0%": { transform: "translateX(100%)", opacity: 0 },
+          "100%": { transform: "translateX(0%)", opacity: 1 },
+        },
+      },
     },
   },
   plugins: [],
