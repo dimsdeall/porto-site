@@ -9,18 +9,21 @@ function TechStack() {
 
   return (
     <div>
-      <div className="flex justify-center mt-4 mb-16">
-        <div className="self-center font-bold text-5xl border-b-4" ref={ref}>
-          My Expertise
+      <div className="flex justify-center mb-16 ">
+        <div
+          className="self-center font-bold  border-b-4 animate-fade-in box-light-neon"
+          ref={ref}
+        >
+          <div className="text-3xl sm:text-4xl md:text-5xl">My Expertise</div>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-10 px-32 mb-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 px-5 md:px-8 lg:px-10 xl:px-32 mb-5">
         <div
           className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 duration-500 ${
             inView ? "animate-slide-up" : "opacity-0"
           }`}
         >
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row gap-3 justify-center items-center">
             <div className="text-8xl ">
               <IoLogoReact />
             </div>
@@ -49,7 +52,7 @@ function TechStack() {
             inView ? "animate-slide-up" : "opacity-0"
           }`}
         >
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row gap-3 justify-center items-center">
             <div className="text-8xl ">
               <IoLogoNodejs />
             </div>
@@ -78,7 +81,7 @@ function TechStack() {
             inView ? "animate-slide-up" : "opacity-0"
           }`}
         >
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row gap-3 justify-center items-center">
             <div className="text-8xl ">
               <IoLogoDocker />
             </div>
