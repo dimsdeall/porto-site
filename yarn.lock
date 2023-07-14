@@ -1588,6 +1588,11 @@ react-intersection-observer@^9.5.2:
   resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.5.2.tgz#f68363a1ff292323c0808201b58134307a1626d0"
   integrity sha512-EmoV66/yvksJcGa1rdW0nDNc4I1RifDWkT50gXSFnPLYQ4xUptuDD4V7k+Rj1OgVAlww628KLGcxPXFlOkkU/Q==
 
+react-photo-view@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-photo-view/-/react-photo-view-1.2.3.tgz#436f81ad0a611dfaa43bbc72a4fef26a057b5aef"
+  integrity sha512-dtaFjU8nAB/rD8mxBaaJcvESlDOweAd1tmvXujS/d3oh1QyGew3xD4C02l46E6Dhn3Tshzl2+IM1h0MWV9nG7g==
+
 react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"

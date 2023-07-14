@@ -1,17 +1,35 @@
-import { LoadingCowardly } from "../../components/atoms";
 import Header from "./render/Header";
 import TechStack from "./render/TechStack";
+import Navbar from "./render/Navbar";
+import Project from "./render/Project";
+import Contact from "./render/Contact";
+import { useRef } from "react";
+
+export type RefProps = "Nav" | "Tech" | "Project";
 
 function HomePage() {
+  const navRef = useRef<HTMLDivElement>(null);
+  const techRef = useRef<HTMLDivElement>(null);
+  const projectRef = useRef<HTMLDivElement>(null);
+
+  const onScroll = (view: RefProps) => {
+    if (view === "Nav")
+      return navRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    if (view === "Tech")
+      return techRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    if (view === "Project")
+      return projectRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="h-auto">
-      <Header />
-      <TechStack />
-
-      <div className="border border-info flex justify-center items-center mx-10 md:mx-20 lg:mx-40 gap-y-10 flex-col mb-10 bg-background bg-opacity-70 rounded-lg mt-32">
-        <LoadingCowardly />
-        <div className="text-rainbow mb-10 text-3xl text-center">Website is under construction</div>
-      </div>
+      <Navbar ref={navRef} onScroll={onScroll} />
+      <Header onScroll={onScroll} />
+      <TechStack refChildren={techRef} />
+      <Project refChildren={projectRef} />
+      <Contact />
     </div>
   );
 }

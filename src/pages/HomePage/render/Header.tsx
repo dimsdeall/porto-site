@@ -1,7 +1,12 @@
 import { useInView } from "react-intersection-observer";
 import photo from "../../../asset/img/dimas.png";
+import { RefProps } from "..";
 
-function Header() {
+interface HeaderProps {
+  onScroll:(args:RefProps) => void
+}
+
+function Header({onScroll}:HeaderProps) {
   const { ref, inView } = useInView({
     delay: 400,
     triggerOnce: true,
@@ -32,9 +37,9 @@ function Header() {
           <img
             alt="dimas"
             src={photo}
-            className="rounded-full h-1/2 lg:h-4/6 w-auto border-[3px] border-red mb-3"
+            className="rounded-full h-1/2 lg:h-3/6 w-auto border-[3px] border-red mb-3"
           />
-          <button className="button-light">See My Expertise</button>
+          <button className="button-light" onClick={() => onScroll('Tech')}>See My Expertise</button>
         </div>
       </section>
     </div>
