@@ -38,7 +38,7 @@ function Project({refChildren}:ProjectProps) {
   const option = {
     delay: 1000,
     triggerOnce: true,
-    threshold: 1,
+    threshold: 0,
   };
   const view1 = useInView(option);
   const view2 = useInView(option);
@@ -59,7 +59,7 @@ function Project({refChildren}:ProjectProps) {
 
   return (
     <div ref={refChildren}>
-      <div className="flex justify-center mb-16" ref={view1.ref}>
+      <div className="flex justify-center mb-16 pt-24 md:pt-40" ref={view1.ref}>
         <div
           className={`self-center font-bold  border-b-4  box-light-neon animate-fade-in ${
             view1.inView ? "animate-fade-in" : "opacity-0"
@@ -68,9 +68,9 @@ function Project({refChildren}:ProjectProps) {
           <div className="text-3xl sm:text-4xl md:text-5xl">My Project</div>
         </div>
       </div>
-      <div className=" px-5 sm:px-5 md:px-5 lg:px-10 xl:px-20 flex flex-col gap-y-5">
+      <div className=" px-5 sm:px-5 md:px-5 lg:px-10 xl:px-20 flex flex-col gap-y-10">
         <div
-          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 ${
+          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 shadow-red-custome rounded ${
             view1.inView ? "animate-slide-up" : "opacity-0"
           }`}
           ref={view2.ref}
@@ -134,7 +134,7 @@ function Project({refChildren}:ProjectProps) {
           </div>
         </div>
         <div
-          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 ${
+          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 shadow-red-custome rounded ${
             view2.inView ? "animate-slide-up" : "opacity-0"
           }`}
           ref={view3.ref}
@@ -206,7 +206,7 @@ function Project({refChildren}:ProjectProps) {
           </div>
         </div>
         <div
-          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 ${
+          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 shadow-red-custome rounded ${
             view3.inView ? "animate-slide-up" : "opacity-0"
           }`}
           ref={view4.ref}
@@ -286,7 +286,7 @@ function Project({refChildren}:ProjectProps) {
           </div>
         </div>
         <div
-          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 ${
+          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 shadow-red-custome rounded ${
             view4.inView ? "animate-slide-up" : "opacity-0"
           }`}
           ref={view5.ref}
@@ -355,7 +355,7 @@ function Project({refChildren}:ProjectProps) {
           </div>
         </div>
         <div
-          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 ${
+          className={`p-5 bg-background bg-opacity-50 backdrop-blur-sm px-4 shadow-red-custome rounded ${
             view5.inView ? "animate-slide-up" : "opacity-0"
           }`}
         >

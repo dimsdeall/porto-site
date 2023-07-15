@@ -29,6 +29,9 @@ module.exports = {
       borderRadius: {
         "4xl": "2rem",
       },
+      boxShadow:{
+        'red-custome' : '0 0 0.5em .25em #39DFA3'
+      },
       animation: {
         "spin-slow": "spin 3s linear infinite",
         "fade-in": "fade 2s ease-in-out",

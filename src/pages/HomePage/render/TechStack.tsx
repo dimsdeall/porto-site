@@ -15,18 +15,18 @@ function TechStack({refChildren}: TechStackProps) {
 
   return (
     <div ref={refChildren}>
-      <div className="flex justify-center mb-16 ">
+      <div className="flex justify-center mb-16 pt-24 md:pt-40">
         <div className="self-center font-bold  border-b-4 animate-fade-in box-light-neon">
           <div className="text-3xl sm:text-4xl md:text-5xl">My Expertise</div>
         </div>
       </div>
       <div
-        className="lg:h-144 pt-0 sm:pt-2 md:pt-5 lg:pt-7 xl:pt-10 mb-14 lg:mb-10 xl:mb-0"
+        className=" pt-0 sm:pt-2 md:pt-5 lg:pt-7 xl:pt-10 mb-14 lg:mb-10 xl:mb-0"
         ref={ref}
       >
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 px-5 md:px-8 lg:px-10 xl:px-32 mb-5">
           <div
-            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 duration-500 ${
+            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 hover:shadow-lg hover:shadow-green duration-500 ${
               inView ? "animate-slide-up" : "opacity-0"
             }`}
           >
@@ -55,7 +55,7 @@ function TechStack({refChildren}: TechStackProps) {
           </div>
 
           <div
-            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 duration-500 ${
+            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 hover:shadow-lg hover:shadow-green duration-500 ${
               inView ? "animate-slide-up" : "opacity-0"
             }`}
           >
@@ -84,7 +84,7 @@ function TechStack({refChildren}: TechStackProps) {
           </div>
 
           <div
-            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 duration-500 ${
+            className={`border border-green p-2 min-h-[400px] bg-background bg-opacity-50 backdrop-blur-sm rounded hover:-translate-y-2 hover:scale-110 hover:shadow-lg hover:shadow-green duration-500 ${
               inView ? "animate-slide-up" : "opacity-0"
             }`}
           >
