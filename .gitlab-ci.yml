@@ -4,8 +4,9 @@ image: node:alpine
   - npm install -g firebase-tools
   - cp $FIREBASE_SERVICE_ACCOUNT "$PWD/service-account.json"
   - export GOOGLE_APPLICATION_CREDENTIALS="$PWD/service-account.json"
-  - yarn
-  - yarn build
+  - npm install -g pnpm  # Install pnpm
+  - pnpm install         # Install dependencies using pnpm
+  - pnpm build           # Build the project using pnpm
 
 stages:
   - deploy

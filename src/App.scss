@@ -34,9 +34,9 @@
 }
 
 .button-light {
-  --glow-color: rgb(232, 32, 176);
-  --glow-spread-color: rgba(232, 32, 176, 0.781);
-  --enhanced-glow-color: rgb(232, 32, 176);
+  --glow-color: rgb(92, 225, 230);
+  --glow-spread-color: rgba(93, 211, 215, 0.781);
+  --enhanced-glow-color: rgb(92, 225, 230);
   --btn-color: rgb(100, 61, 136);
   border: 0.25em solid var(--glow-color);
   padding: 1em 3em;
@@ -80,7 +80,7 @@
 }
 
 .box-light-neon {
-  --glow-color: rgb(232, 32, 176);
+  --glow-color: rgb(92, 225, 230);
   --glow-spread-color: rgba(232, 32, 176, 0.781);
   --btn-color: rgb(100, 61, 136);
   // border: .25em solid var(--glow-color);
