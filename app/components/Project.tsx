@@ -101,43 +101,6 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
 
 const projects: ProjectItem[] = [
   {
-    titleEn: "Event-Driven Architecture Demo",
-    titleId: "Demo Arsitektur Event-Driven",
-    descriptionEn:
-      "Simple case tutorial demonstrating Event-Driven Architecture utilizing Node.js, Express, RabbitMQ, PostgreSQL, and MySQL.",
-    descriptionId:
-      "Tutorial kasus sederhana yang mendemonstrasikan Arsitektur Event-Driven menggunakan Node.js, Express, RabbitMQ, PostgreSQL, dan MySQL.",
-    techStack: [
-      { Icon: SiNodedotjs, label: "Node.js" },
-      { Icon: SiExpress, label: "Express" },
-      { Icon: LuRabbit, label: "RabbitMQ" },
-      { Icon: SiPostgresql, label: "PostgreSQL" },
-      { Icon: SiMysql, label: "MySQL" },
-      { Icon: SiTypescript, label: "TypeScript" },
-    ],
-    links: [
-      { href: "https://github.com/dimsdeall/event-driven-simple-case", label: "GitHub Repository" },
-    ],
-    images: ["/img/event-driven.png"],
-  },
-  {
-    titleEn: "RabbitMQ Integration Demo",
-    titleId: "Demo Integrasi RabbitMQ",
-    descriptionEn:
-      "A simple project showcasing how to integrate and use RabbitMQ for message passing inside Node.js applications with TypeScript.",
-    descriptionId:
-      "Proyek sederhana yang menunjukkan cara mengintegrasikan dan menggunakan RabbitMQ untuk pengiriman pesan di dalam aplikasi Node.js dengan TypeScript.",
-    techStack: [
-      { Icon: SiNodedotjs, label: "Node.js" },
-      { Icon: LuRabbit, label: "RabbitMQ" },
-      { Icon: SiTypescript, label: "TypeScript" },
-    ],
-    links: [
-      { href: "https://github.com/dimsdeall/rabbitmq-simple-case", label: "GitHub Repository" },
-    ],
-    images: ["/img/rabbitmq.png"],
-  },
-  {
     titleEn: "Infotech Retail Web Application",
     titleId: "Aplikasi Web Infotech Retail",
     descriptionEn:
@@ -239,6 +202,43 @@ const projects: ProjectItem[] = [
     ],
     isPrivate: true,
     images: ["/img/nyonyaa-stock/1.png", "/img/nyonyaa-stock/4.png"],
+  },
+  {
+    titleEn: "Event-Driven Architecture Demo",
+    titleId: "Demo Arsitektur Event-Driven",
+    descriptionEn:
+      "Simple case tutorial demonstrating Event-Driven Architecture utilizing Node.js, Express, RabbitMQ, PostgreSQL, and MySQL.",
+    descriptionId:
+      "Tutorial kasus sederhana yang mendemonstrasikan Arsitektur Event-Driven menggunakan Node.js, Express, RabbitMQ, PostgreSQL, dan MySQL.",
+    techStack: [
+      { Icon: SiNodedotjs, label: "Node.js" },
+      { Icon: SiExpress, label: "Express" },
+      { Icon: LuRabbit, label: "RabbitMQ" },
+      { Icon: SiPostgresql, label: "PostgreSQL" },
+      { Icon: SiMysql, label: "MySQL" },
+      { Icon: SiTypescript, label: "TypeScript" },
+    ],
+    links: [
+      { href: "https://github.com/dimsdeall/event-driven-simple-case", label: "GitHub Repository" },
+    ],
+    images: ["/img/event-driven.png"],
+  },
+  {
+    titleEn: "RabbitMQ Integration Demo",
+    titleId: "Demo Integrasi RabbitMQ",
+    descriptionEn:
+      "A simple project showcasing how to integrate and use RabbitMQ for message passing inside Node.js applications with TypeScript.",
+    descriptionId:
+      "Proyek sederhana yang menunjukkan cara mengintegrasikan dan menggunakan RabbitMQ untuk pengiriman pesan di dalam aplikasi Node.js dengan TypeScript.",
+    techStack: [
+      { Icon: SiNodedotjs, label: "Node.js" },
+      { Icon: LuRabbit, label: "RabbitMQ" },
+      { Icon: SiTypescript, label: "TypeScript" },
+    ],
+    links: [
+      { href: "https://github.com/dimsdeall/rabbitmq-simple-case", label: "GitHub Repository" },
+    ],
+    images: ["/img/rabbitmq.png"],
   },
 ];
 
