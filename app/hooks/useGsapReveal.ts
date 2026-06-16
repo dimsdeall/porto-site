@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type AnimationType = "fadeUp" | "fadeIn" | "stagger" | "scale3d";
+type AnimationType = "fadeUp" | "fadeIn" | "stagger" | "scale3d" | "slideInRight" | "slideInLeft";
 
 interface UseGsapRevealOptions {
   type?: AnimationType;
@@ -85,6 +85,44 @@ export function useGsapReveal<T extends HTMLElement = HTMLDivElement>(
             scale: 1,
             rotateX: 0,
             duration: duration * 1.2,
+            delay,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }, el);
+    } else if (type === "slideInRight") {
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: 120 },
+          {
+            opacity: 1,
+            x: 0,
+            duration,
+            delay,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      }, el);
+    } else if (type === "slideInLeft") {
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, x: -120 },
+          {
+            opacity: 1,
+            x: 0,
+            duration,
             delay,
             ease: "power3.out",
             scrollTrigger: {

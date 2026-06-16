@@ -12,15 +12,19 @@ interface HeaderProps {
 
 function Header({ onScroll }: HeaderProps) {
   const { t } = useLanguage();
-  const sectionRef = useGsapReveal<HTMLDivElement>({ type: "scale3d", duration: 1.2 });
+  // Text column: slides in from left
+  const textRef = useGsapReveal<HTMLDivElement>({ type: "slideInLeft", duration: 1.1 });
+  // Photo column: slides in from right
+  const photoRef = useGsapReveal<HTMLDivElement>({ type: "slideInRight", duration: 1.1 });
 
   return (
     <div className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
-      <section
-        ref={sectionRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2"
-      >
-        <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2 overflow-hidden">
+        {/* Text column — slides in from the LEFT */}
+        <div
+          ref={textRef}
+          className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4"
+        >
           <div className="text-lg text-rainbow lg:text-3xl">{t("heyIm")}</div>
           <div className="text-3xl text-rainbow lg:text-5xl xl:text-7xl">
             Dimas Nurcahyo Putra
@@ -39,7 +43,12 @@ function Header({ onScroll }: HeaderProps) {
             </a>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center gap-y-4">
+
+        {/* Photo column — slides in from the RIGHT */}
+        <div
+          ref={photoRef}
+          className="flex flex-col items-center justify-center gap-y-4"
+        >
           <Image
             alt="dimas"
             src="/img/dimas.png"
