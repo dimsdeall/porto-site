@@ -50,7 +50,7 @@ function Header({ onScroll }: HeaderProps) {
             className="rounded-full h-auto lg:h-auto w-48 lg:w-64 border-[3px] border-[#5CE1E6] mb-3 object-cover"
             priority
           />
-          <button className="button-light" onClick={() => onScroll("Tech")}>
+          <button className="button-light mb-6 md:mb-0" onClick={() => onScroll("Tech")}>
             {t("seeExpertise")}
           </button>
         </div>
