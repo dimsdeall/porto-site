@@ -106,6 +106,13 @@ body {
   position: relative;
   transition: all 0.3s;
   cursor: pointer;
+  animation: sun-shine 2.5s ease-in-out infinite;
+}
+
+@keyframes sun-shine {
+  0%   { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 1em 0.5em rgba(92,225,230,0.15); }
+  50%  { box-shadow: 0 0 1.5em 1em var(--glow-color), 0 0 3em 1.5em rgba(92,225,230,0.35), 0 0 5em 2em rgba(92,225,230,0.1); }
+  100% { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 1em 0.5em rgba(92,225,230,0.15); }
 }
 
 .button-light::after {
@@ -126,12 +133,14 @@ body {
   background-color: var(--glow-color);
   box-shadow: 0 0 0.5em 0.25em var(--glow-color),
     0 0 6em 0.2em var(--glow-spread-color);
+  animation: none;
 }
 
 .button-light:active {
   box-shadow: 0 0 0.5em 0.25em var(--glow-color),
     0 0 2.5em 2em var(--glow-spread-color),
     inset 0 0 0.5em 0.25em var(--glow-color);
+  animation: none;
 }
 
 /* ============================================================
