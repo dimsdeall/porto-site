@@ -76,4 +76,14 @@ npm run start
 
 ## 🌐 Deployment
 
-This project is optimized and ready to be deployed on the [Vercel Platform](https://vercel.com). Just connect your GitHub repository to Vercel for automatic deployments on every commit to `main`.
+This project is configured to deploy automatically via **GitHub Actions** when code is pushed to `main` or a Pull Request is opened.
+
+### CI/CD Setup with GitHub Actions
+
+1.  **Vercel Token**: You have already added `VERCEL_TOKEN` to your GitHub Repository Secrets.
+2.  **Organization & Project IDs**: You must add the following secrets (or environment variables) in your GitHub Repository settings (`Settings > Secrets and variables > Actions > Repository secrets`):
+    *   `VERCEL_ORG_ID`: `team_BYSSIB1r7JzP3yicte18Jsby`
+    *   `VERCEL_PROJECT_ID`: `prj_v83fixxREZMxDMabEvj61CbQzFtS`
+
+Once these are set, every commit pushed to `main` will trigger a production deployment, and pull requests will trigger preview deployments automatically.
+
