@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dimas Nurcahyo Putra — Portfolio Website
 
-## Getting Started
+Personal portfolio website refactored from a legacy React Vite app to **Next.js 15 (App Router)**. This portfolio features modern design aesthetics, smooth animations, interactive components, and multilingual support.
 
-First, run the development server:
+## 🚀 Features & Tech Stack
 
+### Tech Stack
+*   **Framework**: [Next.js 15](https://nextjs.org/) (App Router) & React 19
+*   **Language**: TypeScript
+*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+*   **UI Components**: [HeroUI](https://heroui.com/) (formerly NextUI)
+*   **Typography**: JetBrains Mono via Google Fonts
+*   **Smooth Scroll**: [Lenis](https://lenis.darkroom.engineering/) for buttery-smooth inertial scroll
+*   **Localization (i18n)**: English (Default) & Bahasa Indonesia context-based translation
+
+### Key Updates & Optimizations
+1.  **Firebase Removal**: Completely migrated away from Firebase to facilitate native, fast deployment on **Vercel**.
+2.  **Scroll Optimizations**: Optimized scroll reveal transitions using lightweight GPU-accelerated CSS and `react-intersection-observer` (removed jerky scroll delays).
+3.  **Custom Favicon**: Configured to use the custom portfolio icon matching the logo design.
+4.  **New Projects Added**: Integrated projects directly from GitHub, including `event-driven-simple-case` and `rabbitmq-simple-case`.
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+Make sure you have **Node.js** (latest LTS recommended) installed.
+
+### Installation
+Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/dimsdeall/porto-site.git
+cd porto-site
 ```
 
+Install dependencies:
+```bash
+npm install
+```
+
+### Running Development Server
+Run the local dev server:
+```bash
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build and Production
+To build the application for production:
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+├── app/
+│   ├── components/       # Portfolio UI sections (Header, TechStack, Project, Contact, Navbar)
+│   ├── context/          # LanguageContext for i18n
+│   ├── globals.css       # Design tokens, custom animations, and scrollbar styles
+│   ├── layout.tsx        # App layout and SEO metadata definitions
+│   ├── page.tsx          # Main entry page
+│   └── providers.tsx     # Application provider wrapper (Lenis, LanguageContext)
+├── public/
+│   ├── favicon.ico       # Custom portfolio favicon
+│   └── img/              # Image assets for projects and profile photo
+└── package.json          # Dependencies & scripts
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌐 Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is optimized and ready to be deployed on the [Vercel Platform](https://vercel.com). Just connect your GitHub repository to Vercel for automatic deployments on every commit to `main`.
