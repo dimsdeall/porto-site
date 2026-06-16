@@ -37,21 +37,21 @@ cd porto-site
 
 Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
 ### Running Development Server
 Run the local dev server:
 ```bash
-npm run dev
+pnpm dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Build and Production
 To build the application for production:
 ```bash
-npm run build
-npm run start
+pnpm build
+pnpm start
 ```
 
 ---

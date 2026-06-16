@@ -2,7 +2,6 @@
 
 import { useState, RefObject } from "react";
 import Image from "next/image";
-import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
 import {
@@ -22,6 +21,7 @@ import {
 } from "react-icons/si";
 import { LuRabbit } from "react-icons/lu";
 import { useLanguage } from "../context/LanguageContext";
+import { useGsapReveal } from "../hooks/useGsapReveal";
 
 // Re-export type for icon usage
 type IconComponent = React.ComponentType<{ className?: string }>;
@@ -242,19 +242,14 @@ const projects: ProjectItem[] = [
   },
 ];
 
-function ProjectCard({
-  project,
-  inView,
-}: {
-  project: ProjectItem;
-  inView: boolean;
-}) {
+function ProjectCard({ project }: { project: ProjectItem }) {
   const { locale, t } = useLanguage();
   const title = locale === "en" ? project.titleEn : project.titleId;
   const description = locale === "en" ? project.descriptionEn : project.descriptionId;
+  const cardRef = useGsapReveal<HTMLDivElement>({ type: "scale3d", duration: 1 });
 
   return (
-    <div className={`reveal-on-scroll ${inView ? "active" : ""}`}>
+    <div ref={cardRef}>
       <Card
         className="backdrop-blur-sm rounded"
         style={{
@@ -318,43 +313,21 @@ function ProjectCard({
 
 function Project({ refChildren }: ProjectProps) {
   const { t } = useLanguage();
-  const option = { triggerOnce: true, threshold: 0.1 };
-  const titleView = useInView(option);
-
-  // Dynamic creation of hooks is not allowed by React, but we can manage standard list observers.
-  // Since we added 2 projects, total is now 7. Let's create observers for 7 items.
-  const view0 = useInView(option);
-  const view1 = useInView(option);
-  const view2 = useInView(option);
-  const view3 = useInView(option);
-  const view4 = useInView(option);
-  const view5 = useInView(option);
-  const view6 = useInView(option);
-
-  const views = [view0, view1, view2, view3, view4, view5, view6];
+  const titleRef = useGsapReveal<HTMLDivElement>({ type: "fadeIn", duration: 1 });
 
   return (
     <div ref={refChildren}>
-      <div
-        className="flex justify-center mb-16 pt-24 md:pt-40"
-        ref={titleView.ref}
-      >
+      <div className="flex justify-center mb-16 pt-24 md:pt-40">
         <div
-          className={`self-center font-bold border-b-4 box-light-neon reveal-fade-in ${
-            titleView.inView ? "active" : ""
-          }`}
+          ref={titleRef}
+          className="self-center font-bold border-b-4 box-light-neon"
         >
           <div className="text-3xl sm:text-4xl md:text-5xl text-white">{t("projectTitle")}</div>
         </div>
       </div>
       <div className="px-5 sm:px-5 md:px-5 lg:px-10 xl:px-20 flex flex-col gap-y-10 pb-10">
         {projects.map((project, index) => (
-          <div key={index} ref={views[index]?.ref}>
-            <ProjectCard
-              project={project}
-              inView={views[index]?.inView ?? false}
-            />
-          </div>
+          <ProjectCard key={index} project={project} />
         ))}
       </div>
     </div>

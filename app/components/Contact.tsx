@@ -7,10 +7,10 @@ import {
   SiInstagram,
 } from "react-icons/si";
 import { FaLinkedinIn } from "react-icons/fa";
-import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
 import { useLanguage } from "../context/LanguageContext";
+import { useGsapReveal } from "../hooks/useGsapReveal";
 
 const socialLinks = [
   { Icon: SiGmail, href: "mailto:dimsdeall@gmail.com", label: "Email", isExternal: false },
@@ -22,17 +22,12 @@ const socialLinks = [
 
 function Contact() {
   const { t } = useLanguage();
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const ref = useGsapReveal<HTMLDivElement>({ type: "fadeUp", duration: 1 });
 
   return (
     <div
-      className={`mt-10 mb-10 mx-2 md:px-20 lg:px-44 xl:px-80 reveal-on-scroll ${
-        inView ? "active" : ""
-      }`}
       ref={ref}
+      className="mt-10 mb-10 mx-2 md:px-20 lg:px-44 xl:px-80"
     >
       <Card
         className="border border-[#E820B0]"

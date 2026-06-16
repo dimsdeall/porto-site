@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useInView } from "react-intersection-observer";
-import { SiGitlab } from "react-icons/si";
+import { SiGithub } from "react-icons/si";
 import { RefProps } from "./HomePage";
 import { useLanguage } from "../context/LanguageContext";
+import { useGsapReveal } from "../hooks/useGsapReveal";
 
 interface HeaderProps {
   onScroll: (args: RefProps) => void;
@@ -12,17 +12,13 @@ interface HeaderProps {
 
 function Header({ onScroll }: HeaderProps) {
   const { t } = useLanguage();
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0,
-  });
+  const sectionRef = useGsapReveal<HTMLDivElement>({ type: "scale3d", duration: 1.2 });
 
   return (
-    <div ref={ref} className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
+    <div className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
       <section
-        className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2 reveal-on-scroll ${
-          inView ? "active" : ""
-        }`}
+        ref={sectionRef}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2"
       >
         <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
           <div className="text-lg text-rainbow lg:text-3xl">{t("heyIm")}</div>
@@ -33,9 +29,9 @@ function Header({ onScroll }: HeaderProps) {
             {t("introText")}
           </div>
           <div className="flex flex-row items-center justify-center font-extrabold gap-x-2 text-[#5CE1E6] hover:text-[#389AFF] md:justify-normal transition-colors">
-            <SiGitlab />
+            <SiGithub />
             <a
-              href="https://gitlab.com/server-dimsdeall/home-react-type"
+              href="https://github.com/dimsdeall"
               target="_blank"
               rel="noopener noreferrer"
             >

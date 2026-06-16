@@ -22,11 +22,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-size: 20
-          cache: 'npm'
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: pnpm add --global vercel@latest
 
       - name: Pull Vercel Environment Information (Preview)
         if: github.event_name == 'pull_request'
@@ -46,10 +62,8 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel (Preview)
         if: github.event_name == 'pull_request'
-        run: |
-          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel (Production)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
