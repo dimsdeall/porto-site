@@ -19,6 +19,7 @@ function Header({ onScroll }: HeaderProps) {
     <div className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
       <section
         ref={sectionRef}
+        style={{ opacity: 0 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2"
       >
         <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
