@@ -110,9 +110,9 @@ body {
 }
 
 @keyframes sun-shine {
-  0%   { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 1em 0.5em rgba(92,225,230,0.15); }
-  50%  { box-shadow: 0 0 1.5em 1em var(--glow-color), 0 0 3em 1.5em rgba(92,225,230,0.35), 0 0 5em 2em rgba(92,225,230,0.1); }
-  100% { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 1em 0.5em rgba(92,225,230,0.15); }
+  0%   { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 0.8em 0.3em rgba(92,225,230,0.12); }
+  50%  { box-shadow: 0 0 0.9em 0.5em var(--glow-color), 0 0 1.8em 0.8em rgba(92,225,230,0.22), 0 0 2.8em 1em rgba(92,225,230,0.08); }
+  100% { box-shadow: 0 0 0.5em 0.25em var(--glow-color), 0 0 0.8em 0.3em rgba(92,225,230,0.12); }
 }
 
 .button-light::after {
