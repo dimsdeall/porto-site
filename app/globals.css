@@ -1,0 +1,267 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+/* ============================================================
+   NEON / COLDPLAY THEME — Custom design tokens (Tailwind v4)
+   ============================================================ */
+@theme {
+  /* Neon color palette */
+  --color-yellow: #F6D213;
+  --color-red: #E820B0;
+  --color-green: #39DFA3;
+  --color-blue: #389AFF;
+  --color-info: #5CE1E6;
+  --color-background: #00061b;
+  --color-white: #FFFFFF;
+
+  /* Font */
+  --font-jetbrains-mono: var(--font-jetbrains-mono);
+
+  /* Screens */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 976px;
+  --breakpoint-xl: 1440px;
+
+  /* Animations */
+  --animate-fade-in: fade 2s ease-in-out;
+  --animate-slide-up: bottom-up 1s;
+  --animate-slide-right: right-to-left 1s;
+  --animate-spin-slow: spin 3s linear infinite;
+
+  /* Keyframes */
+  @keyframes fade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes bottom-up {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0%); opacity: 1; }
+  }
+  @keyframes right-to-left {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0%); opacity: 1; }
+  }
+}
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+:root {
+  --background: #00061b;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: #00061b;
+  color: #ffffff;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+/* ============================================================
+   BACKGROUND LAYER (starfield / Neon bg image)
+   ============================================================ */
+.background-layer {
+  background-image: url(/img/background3.png);
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-color: #00061b;
+}
+
+/* ============================================================
+   RAINBOW GRADIENT TEXT (Coldplay signature style)
+   ============================================================ */
+.text-rainbow {
+  background: linear-gradient(
+    to right,
+    #f6d213,
+    #e820b0,
+    #39dfa3,
+    #389aff,
+    #5ce1e6
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ============================================================
+   NEON GLOW BUTTON (.button-light)
+   ============================================================ */
+.button-light {
+  --glow-color: rgb(92, 225, 230);
+  --glow-spread-color: rgba(93, 211, 215, 0.781);
+  --enhanced-glow-color: rgb(92, 225, 230);
+  border: 0.25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  background-color: transparent;
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 0.5em 0.25em var(--glow-color);
+  text-shadow: 0 0 0.5em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.button-light::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 120%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  filter: blur(2em);
+  opacity: 0.7;
+  transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+}
+
+.button-light:hover {
+  color: #ffffff;
+  background-color: var(--glow-color);
+  box-shadow: 0 0 0.5em 0.25em var(--glow-color),
+    0 0 6em 0.2em var(--glow-spread-color);
+}
+
+.button-light:active {
+  box-shadow: 0 0 0.5em 0.25em var(--glow-color),
+    0 0 2.5em 2em var(--glow-spread-color),
+    inset 0 0 0.5em 0.25em var(--glow-color);
+}
+
+/* ============================================================
+   NEON BOX HEADING (.box-light-neon)
+   ============================================================ */
+.box-light-neon {
+  --glow-color: rgb(92, 225, 230);
+  --glow-spread-color: rgba(232, 32, 176, 0.781);
+  padding: 1em;
+  outline: none;
+  text-shadow: 0 0 0.5em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+}
+
+.box-light-neon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--glow-spread-color);
+  filter: blur(2em);
+  transform: perspective(1.5em) scale(1, 0.6);
+}
+
+/* ============================================================
+   SLIDE BUTTON (.button-slide + .hover-text)
+   ============================================================ */
+.button-slide {
+  margin: 0;
+  height: auto;
+  background: transparent;
+  padding: 0;
+  border: none;
+  --border-right: 3px;
+  --text-stroke-color: rgba(255, 255, 255);
+  --animation-color: #39DFA3;
+  --fs-size: 10px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-size: var(--fs-size);
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  position: relative;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+  cursor: pointer;
+}
+
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+
+.button-slide:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color));
+}
+
+/* ============================================================
+   HEROUI OVERRIDES — map neon colors to semantic tokens
+   ============================================================ */
+:root {
+  --heroui-background: #00061b;
+  --heroui-foreground: #ffffff;
+  --heroui-primary: #39DFA3;
+  --heroui-primary-foreground: #00061b;
+  --heroui-secondary: #E820B0;
+  --heroui-secondary-foreground: #ffffff;
+  --heroui-default: #5CE1E6;
+  --heroui-default-foreground: #00061b;
+  --heroui-content1: rgba(0, 6, 27, 0.5);
+  --heroui-content1-foreground: #ffffff;
+  --heroui-divider: #39DFA3;
+}
+
+/* ============================================================
+   LENIS SMOOTH SCROLL INTEGRATION
+   ============================================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ============================================================
+   LIGHTWEIGHT GPU-ACCELERATED SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade-in {
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.reveal-fade-in.active {
+  opacity: 1;
+}
