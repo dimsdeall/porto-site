@@ -30,13 +30,13 @@ function Navbar({ refChildren, onScroll }: NavbarProps) {
         />
       </div>
       <div className="grid col-span-2 md:justify-items-end items-center rounded-sm">
-        <div className="flex gap-x-3 p-7 bg-[#00061b]/60 rounded border border-[#39DFA3] backdrop-blur-[3px] animate-fade-in justify-center items-center flex-wrap gap-y-4 sm:gap-y-0">
+        <div className="flex gap-x-2 md:gap-x-3 p-4 md:p-7 bg-[#00061b]/60 rounded border border-[#39DFA3] backdrop-blur-[3px] animate-fade-in justify-center items-center flex-wrap gap-y-2 sm:gap-y-0">
           <ButtonSlide label={t("navExpertise")} onClick={() => onScroll("Tech")} />
           <ButtonSlide label={t("navProject")} onClick={() => onScroll("Project")} />
           <ButtonSlide label={t("navHome")} onClick={() => onScroll("Nav")} />
           <button
             onClick={toggleLocale}
-            className="px-3 py-1.5 font-bold text-xs rounded border border-[#39DFA3] text-[#39DFA3] hover:bg-[#39DFA3] hover:text-[#00061b] transition-all duration-300 uppercase cursor-pointer tracking-wider"
+            className="px-3 py-1.5 font-bold text-xs rounded border border-[#39DFA3] text-[#39DFA3] hover:bg-[#39DFA3] hover:text-[#00061b] transition-all duration-300 uppercase cursor-pointer tracking-wide whitespace-nowrap"
           >
             {locale === "en" ? "ID" : "EN"}
           </button>
