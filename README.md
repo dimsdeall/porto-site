@@ -2,6 +2,8 @@
 
 Personal portfolio website refactored from a legacy React Vite app to **Next.js 15 (App Router)**. This portfolio features modern design aesthetics, smooth animations, interactive components, and multilingual support.
 
+*Note: This repository is a refactored version of the original legacy repository hosted on GitLab at [gitlab.com/server-dimsdeall/home-react-type](https://gitlab.com/server-dimsdeall/home-react-type).*
+
 ## 🚀 Features & Tech Stack
 
 ### Tech Stack
