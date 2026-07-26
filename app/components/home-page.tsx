@@ -41,7 +41,7 @@ function HomePage() {
   };
 
   return (
-    <div className="h-auto page-entrance">
+    <div className="h-auto">
       {/* Scroll progress bar */}
       <div className="fixed top-0 left-0 z-[999] h-[2px] bg-gradient-to-r from-[#39DFA3] via-[#5CE1E6] to-[#E820B0] transition-all duration-150"
         style={{ width: `${scrollProgress}%` }}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 export type Locale = "en" | "id";
 
@@ -61,16 +61,14 @@ const translations: Record<Locale, Record<string, string>> = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("en");
+function getInitialLocale(): Locale {
+  if (typeof window === "undefined") return "en";
+  const saved = localStorage.getItem("portfolio_lang") as Locale;
+  return saved === "en" || saved === "id" ? saved : "en";
+}
 
-  // Load language from localStorage if available
-  useEffect(() => {
-    const saved = localStorage.getItem("portfolio_lang") as Locale;
-    if (saved === "en" || saved === "id") {
-      setLocale(saved);
-    }
-  }, []);
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [locale, setLocale] = useState<Locale>(getInitialLocale);
 
   const toggleLocale = () => {
     const next = locale === "en" ? "id" : "en";
