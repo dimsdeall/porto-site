@@ -5,8 +5,6 @@ import Image from "next/image";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
 import {
-  SiMysql,
-  SiLaravel,
   SiNodedotjs,
   SiBootstrap,
   SiExpress,
@@ -18,10 +16,10 @@ import {
   SiIos,
   SiTailwindcss,
   SiTypescript,
+  SiNextdotjs,
 } from "react-icons/si";
-import { LuRabbit } from "react-icons/lu";
-import { useLanguage } from "../context/LanguageContext";
-import { useGsapReveal } from "../hooks/useGsapReveal";
+import { useLanguage } from "../context/language-context";
+import { useGsapReveal } from "../hooks/use-gsap-reveal";
 
 // Re-export type for icon usage
 type IconComponent = React.ComponentType<{ className?: string }>;
@@ -101,24 +99,29 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
 
 const projects: ProjectItem[] = [
   {
-    titleEn: "Infotech Retail Web Application",
-    titleId: "Aplikasi Web Infotech Retail",
+    titleEn: "Example Retail",
+    titleId: "Example Retail",
     descriptionEn:
-      "Infotech Retail applications include Purchase, Sales, Master, Accounts Payable, Accounts Receivable and GL",
+      "Web-based retail management application — managing purchases, sales, inventory, receivables/payables, and general ledger in one system. Built with Next.js 16, HeroUI v3, Prisma ORM, and Next-Auth v5.",
     descriptionId:
-      "Aplikasi Ritel Infotech meliputi Pembelian, Penjualan, Master, Utang Dagang, Piutang Dagang, dan Buku Besar (GL)",
+      "Aplikasi manajemen retail berbasis web — mengelola pembelian, penjualan, persediaan, piutang/hutang, dan general ledger dalam satu sistem. Dibangun dengan Next.js 16, HeroUI v3, Prisma ORM, dan Next-Auth v5.",
     techStack: [
-      { Icon: SiLaravel, label: "Laravel" },
-      { Icon: SiMysql, label: "MySQL" },
+      { Icon: SiNextdotjs, label: "Next.js" },
+      { Icon: SiTypescript, label: "TypeScript" },
+      { Icon: SiTailwindcss, label: "Tailwind" },
+      { Icon: SiNodedotjs, label: "Node.js" },
+      { Icon: SiPostgresql, label: "PostgreSQL" },
+      { Icon: SiDocker, label: "Dockerize" },
     ],
     links: [
-      { href: "http://v2.infotechbdg.com/login", label: "http://v2.infotechbdg.com/login" },
+      { href: "https://retail.dimsdeall.my.id/", label: "retail.dimsdeall.my.id" },
     ],
     images: [
       "/img/infotech-laravel/1.png",
       "/img/infotech-laravel/2.png",
       "/img/infotech-laravel/3.png",
       "/img/infotech-laravel/4.png",
+      "/img/infotech-laravel/5.png",
     ],
   },
   {
@@ -203,43 +206,7 @@ const projects: ProjectItem[] = [
     isPrivate: true,
     images: ["/img/nyonyaa-stock/1.png", "/img/nyonyaa-stock/4.png"],
   },
-  {
-    titleEn: "Event-Driven Architecture Demo",
-    titleId: "Demo Arsitektur Event-Driven",
-    descriptionEn:
-      "Simple case tutorial demonstrating Event-Driven Architecture utilizing Node.js, Express, RabbitMQ, PostgreSQL, and MySQL.",
-    descriptionId:
-      "Tutorial kasus sederhana yang mendemonstrasikan Arsitektur Event-Driven menggunakan Node.js, Express, RabbitMQ, PostgreSQL, dan MySQL.",
-    techStack: [
-      { Icon: SiNodedotjs, label: "Node.js" },
-      { Icon: SiExpress, label: "Express" },
-      { Icon: LuRabbit, label: "RabbitMQ" },
-      { Icon: SiPostgresql, label: "PostgreSQL" },
-      { Icon: SiMysql, label: "MySQL" },
-      { Icon: SiTypescript, label: "TypeScript" },
-    ],
-    links: [
-      { href: "https://github.com/dimsdeall/event-driven-simple-case", label: "GitHub Repository" },
-    ],
-    images: ["/img/event-driven.png"],
-  },
-  {
-    titleEn: "RabbitMQ Integration Demo",
-    titleId: "Demo Integrasi RabbitMQ",
-    descriptionEn:
-      "A simple project showcasing how to integrate and use RabbitMQ for message passing inside Node.js applications with TypeScript.",
-    descriptionId:
-      "Proyek sederhana yang menunjukkan cara mengintegrasikan dan menggunakan RabbitMQ untuk pengiriman pesan di dalam aplikasi Node.js dengan TypeScript.",
-    techStack: [
-      { Icon: SiNodedotjs, label: "Node.js" },
-      { Icon: LuRabbit, label: "RabbitMQ" },
-      { Icon: SiTypescript, label: "TypeScript" },
-    ],
-    links: [
-      { href: "https://github.com/dimsdeall/rabbitmq-simple-case", label: "GitHub Repository" },
-    ],
-    images: ["/img/rabbitmq.png"],
-  },
+
 ];
 
 function ProjectCard({ project }: { project: ProjectItem }) {

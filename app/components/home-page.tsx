@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Navbar from "./Navbar";
-import Header from "./Header";
-import TechStack from "./TechStack";
-import Project from "./Project";
-import Contact from "./Contact";
+import Navbar from "./navbar";
+import Header from "./header";
+import TechStack from "./tech-stack";
+import Project from "./project";
+import Contact from "./contact";
 
 export type RefProps = "Nav" | "Tech" | "Project";
 
@@ -16,13 +16,13 @@ function HomePage() {
   const [hState, sethState] = useState(false);
 
   useEffect(() => {
-    const heightScreen = window.screen.height - 300;
     const handleScroll = () => {
       const y = window.scrollY;
-      if (heightScreen > y) sethState(false);
-      if (heightScreen < y) sethState(true);
+      const threshold = techRef.current ? techRef.current.offsetTop - 300 : window.innerHeight;
+      sethState(y > threshold);
     };
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

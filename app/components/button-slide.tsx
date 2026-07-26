@@ -1,6 +1,6 @@
 "use client";
 
-import "./ButtonSlide.css";
+import "./button-slide.css";
 
 interface ButtonSlideProps {
   label: string;

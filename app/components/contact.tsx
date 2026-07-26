@@ -9,8 +9,8 @@ import {
 import { FaLinkedinIn } from "react-icons/fa";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
-import { useLanguage } from "../context/LanguageContext";
-import { useGsapReveal } from "../hooks/useGsapReveal";
+import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../context/language-context";
 
 const socialLinks = [
   { Icon: SiGmail, href: "mailto:dimsdeall@gmail.com", label: "Email", isExternal: false },
@@ -22,12 +22,26 @@ const socialLinks = [
 
 function Contact() {
   const { t } = useLanguage();
-  const ref = useGsapReveal<HTMLDivElement>({ type: "fadeUp", duration: 1 });
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
       ref={ref}
-      className="mt-10 mb-10 mx-2 md:px-20 lg:px-44 xl:px-80"
+      className={`mt-10 mb-10 mx-2 md:px-20 lg:px-44 xl:px-80 transition-all duration-1000 ease-out ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
     >
       <Card
         className="border border-[#E820B0]"
@@ -35,7 +49,7 @@ function Contact() {
       >
         <CardContent className="p-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="text-rainbow text-center text-base self-center">
+            <div className="text-white text-center text-base self-center">
               {t("thankYou")}
             </div>
             <div className="flex justify-center gap-x-7 flex-wrap gap-y-2">

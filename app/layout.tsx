@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  alternates: {
+    canonical: "https://dimsdeall.my.id/",
+  },
 };
 
 export default function RootLayout({

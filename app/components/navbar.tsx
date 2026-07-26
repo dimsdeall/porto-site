@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { RefObject } from "react";
-import ButtonSlide from "./ButtonSlide";
-import { RefProps } from "./HomePage";
-import { useLanguage } from "../context/LanguageContext";
+import ButtonSlide from "./button-slide";
+import { RefProps } from "./home-page";
+import { useLanguage } from "../context/language-context";
 
 interface NavbarProps {
   refChildren?: RefObject<HTMLDivElement | null>;

@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { SiGithub } from "react-icons/si";
-import { RefProps } from "./HomePage";
-import { useLanguage } from "../context/LanguageContext";
-import { useGsapReveal } from "../hooks/useGsapReveal";
+import { RefProps } from "./home-page";
+import { useLanguage } from "../context/language-context";
+import { useGsapReveal } from "../hooks/use-gsap-reveal";
 
 interface HeaderProps {
   onScroll: (args: RefProps) => void;
