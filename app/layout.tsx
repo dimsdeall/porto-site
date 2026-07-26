@@ -31,6 +31,16 @@ export const metadata: Metadata = {
       "Portfolio of Dimas Nurcahyo Putra — Full Stack & Mobile Engineer.",
     type: "website",
     locale: "id_ID",
+    url: "https://dimsdeall.my.id/",
+    siteName: "Dimas Nurcahyo Putra",
+    images: [{ url: "https://dimsdeall.my.id/img/dimas.png", width: 300, height: 300, alt: "Dimas Nurcahyo Putra" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "Dimas Nurcahyo Putra — Full Stack Developer",
+    description:
+      "Portfolio of Dimas Nurcahyo Putra — Full Stack & Mobile Engineer.",
+    images: ["https://dimsdeall.my.id/img/dimas.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -38,6 +48,27 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://dimsdeall.my.id/",
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Dimas Nurcahyo Putra",
+  url: "https://dimsdeall.my.id/",
+  image: "https://dimsdeall.my.id/img/dimas.png",
+  jobTitle: "Full Stack & Mobile Engineer",
+  description:
+    "Full Stack & Mobile Engineer specializing in React, React Native, Node.js, and DevOps.",
+  sameAs: [
+    "https://github.com/dimsdeall",
+    "https://gitlab.com/dimsdeall",
+    "https://linkedin.com/in/dimsdeall",
+    "https://instagram.com/dimsdeall",
+  ],
+  knowsAbout: [
+    "React", "React Native", "Node.js", "TypeScript", "Next.js",
+    "Docker", "PostgreSQL", "Express.js", "DevOps", "Tailwind CSS",
+  ],
 };
 
 export default function RootLayout({
@@ -48,6 +79,10 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${jetbrainsMono.variable} antialiased`}>
       <body className="background-layer min-h-screen">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
