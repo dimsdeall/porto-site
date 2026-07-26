@@ -4,7 +4,7 @@ import Image from "next/image";
 import { SiGithub } from "react-icons/si";
 import { RefProps } from "./home-page";
 import { useLanguage } from "../context/language-context";
-import { useGsapReveal } from "../hooks/use-gsap-reveal";
+import { useSlideInRight } from "../hooks/use-intersection-gsap";
 
 interface HeaderProps {
   onScroll: (args: RefProps) => void;
@@ -12,13 +12,12 @@ interface HeaderProps {
 
 function Header({ onScroll }: HeaderProps) {
   const { t } = useLanguage();
-  const sectionRef = useGsapReveal<HTMLElement>({ type: "slideInRight", duration: 1.2 });
+  const sectionRef = useSlideInRight<HTMLElement>();
 
   return (
     <div className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
       <section
         ref={sectionRef}
-        style={{ opacity: 0 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2"
       >
         <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
