@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SiGithub } from "react-icons/si";
 import { RefProps } from "./home-page";
 import { useLanguage } from "../context/language-context";
+import { useGsapReveal } from "../hooks/use-gsap-reveal";
 
 interface HeaderProps {
   onScroll: (args: RefProps) => void;
@@ -12,24 +12,13 @@ interface HeaderProps {
 
 function Header({ onScroll }: HeaderProps) {
   const { t } = useLanguage();
-  const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const sectionRef = useGsapReveal<HTMLElement>({ type: "slideInRight", duration: 1.2 });
 
   return (
-    <div className={`h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10 transition-all duration-1000 ease-out ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+    <div className="h-auto px-2 pt-0 md:px-8 sm:pt-5 md:pt-10">
       <section
         ref={sectionRef}
+        style={{ opacity: 0 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/70 h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] backdrop-blur-sm gap-x-2"
       >
         <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
