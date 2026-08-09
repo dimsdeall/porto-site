@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, RefObject } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
@@ -115,7 +116,7 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
     };
   }, [isOpen]);
 
-  const maxPan = (s: number) => (s - 1) * 300;
+  const maxPan = (s: number) => (s - 1) * 500;
   const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v));
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -157,8 +158,17 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
   };
 
   const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (e.deltaY < 0) zoomIn();
-    else zoomOut();
+    // Saat zoom: scroll = geser gambar (vertikal; Shift / trackpad = horizontal)
+    if (scale > 1) {
+      const dx = e.shiftKey ? -e.deltaY : -e.deltaX;
+      const dy = e.shiftKey ? 0 : -e.deltaY;
+      const m = maxPan(scale);
+      setPos((p) => ({ x: clamp(p.x + dx, m), y: clamp(p.y + dy, m) }));
+    } else if (e.deltaY < 0) {
+      zoomIn();
+    } else {
+      zoomOut();
+    }
   };
 
   return (
@@ -182,100 +192,103 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
         ))}
       </div>
 
-      {isOpen && lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
-          onClick={close}
-        >
+      {isOpen &&
+        lightboxIndex !== null &&
+        createPortal(
           <div
-            className="relative w-full h-full flex flex-col"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black"
+            onClick={close}
           >
-            {/* Toolbar: navigasi + zoom */}
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 bg-[#00061b]/85 border border-[#39DFA3]/40 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg">
-              <button
-                onClick={prev}
-                aria-label="Previous image"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
-              >
-                ‹
-              </button>
-              <span className="text-xs text-white/70 px-1 font-mono">
-                {lightboxIndex + 1} / {images.length}
-              </span>
-              <button
-                onClick={next}
-                aria-label="Next image"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
-              >
-                ›
-              </button>
-              <div className="w-px h-4 bg-white/20 mx-1" />
-              <button
-                onClick={zoomOut}
-                aria-label="Zoom out"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
-              >
-                −
-              </button>
-              <button
-                onClick={reset}
-                aria-label="Reset zoom"
-                className="px-2 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xs font-mono min-w-[3rem]"
-              >
-                {Math.round(scale * 100)}%
-              </button>
-              <button
-                onClick={zoomIn}
-                aria-label="Zoom in"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
-              >
-                +
-              </button>
-            </div>
-
-            {/* Close */}
-            <button
-              onClick={close}
-              aria-label="Close lightbox"
-              className="absolute top-3 right-3 z-10 bg-[#E820B0] hover:bg-[#5CE1E6] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold transition-colors shadow-lg"
-            >
-              ✕
-            </button>
-
-            {/* Image area — fullscreen, zoomable, draggable */}
             <div
-              className="flex-1 flex items-center justify-center overflow-hidden select-none touch-none cursor-grab active:cursor-grabbing"
-              onPointerDown={onPointerDown}
-              onPointerMove={onPointerMove}
-              onPointerUp={onPointerUp}
-              onPointerCancel={onPointerUp}
-              onWheel={onWheel}
+              className="relative w-full h-full flex flex-col"
+              onClick={(e) => e.stopPropagation()}
             >
-              <Image
-                src={images[lightboxIndex]}
-                alt={`${title} ${lightboxIndex + 1}`}
-                width={1600}
-                height={1000}
-                draggable={false}
-                className={`max-w-full max-h-full w-auto h-auto object-contain ${
-                  dragging ? "" : "transition-transform duration-150 ease-out"
-                }`}
-                style={{
-                  transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
-                }}
-              />
-            </div>
+              {/* Close */}
+              <button
+                onClick={close}
+                aria-label="Close lightbox"
+                className="absolute top-3 right-3 z-10 bg-[#E820B0] hover:bg-[#5CE1E6] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold transition-colors shadow-lg"
+              >
+                ✕
+              </button>
 
-            {/* Hint */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] text-white/50 bg-black/60 rounded-full px-3 py-1 pointer-events-none whitespace-nowrap font-mono">
-              {scale > 1
-                ? "Drag untuk geser • Scroll / + − untuk zoom"
-                : "Geser kiri/kanan untuk navigasi • Scroll / + − untuk zoom"}
+              {/* Image area — fullscreen, zoomable, draggable */}
+              <div
+                className="flex-1 flex items-center justify-center overflow-hidden select-none touch-none cursor-grab active:cursor-grabbing"
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerUp}
+                onWheel={onWheel}
+              >
+                <Image
+                  src={images[lightboxIndex]}
+                  alt={`${title} ${lightboxIndex + 1}`}
+                  width={1600}
+                  height={1000}
+                  draggable={false}
+                  className={`max-w-full max-h-full w-auto h-auto object-contain ${
+                    dragging ? "" : "transition-transform duration-150 ease-out"
+                  }`}
+                  style={{
+                    transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+                  }}
+                />
+              </div>
+
+              {/* Toolbar navigasi + zoom — di BAWAH */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 bg-[#00061b]/90 border border-[#39DFA3]/40 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg">
+                <button
+                  onClick={prev}
+                  aria-label="Previous image"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
+                >
+                  ‹
+                </button>
+                <span className="text-xs text-white/70 px-1 font-mono">
+                  {lightboxIndex + 1} / {images.length}
+                </span>
+                <button
+                  onClick={next}
+                  aria-label="Next image"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
+                >
+                  ›
+                </button>
+                <div className="w-px h-4 bg-white/20 mx-1" />
+                <button
+                  onClick={zoomOut}
+                  aria-label="Zoom out"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
+                >
+                  −
+                </button>
+                <button
+                  onClick={reset}
+                  aria-label="Reset zoom"
+                  className="px-2 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xs font-mono min-w-[3rem]"
+                >
+                  {Math.round(scale * 100)}%
+                </button>
+                <button
+                  onClick={zoomIn}
+                  aria-label="Zoom in"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Hint */}
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-[11px] text-white/50 bg-black/60 rounded-full px-3 py-1 pointer-events-none whitespace-nowrap font-mono">
+                {scale > 1
+                  ? "Scroll untuk geser • Drag untuk pan • + − zoom"
+                  : "Geser kiri/kanan untuk navigasi • Scroll / + − untuk zoom"}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }
