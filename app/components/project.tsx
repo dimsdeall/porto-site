@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, RefObject } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@heroui/react/card";
 import { Link } from "@heroui/react/link";
@@ -40,10 +40,126 @@ interface ProjectItem {
   images: string[];
 }
 
-// Photo Gallery with lightbox using native HTML dialog (no useDisclosure needed)
+// Fullscreen lightbox dengan zoom (wheel/button), drag-pan saat zoom,
+// dan swipe kiri/kanan untuk navigasi antar gambar dalam satu project.
 function PhotoGallery({ images, title }: { images: string[]; title: string }) {
-  const [selectedImg, setSelectedImg] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [scale, setScale] = useState(1);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    origX: number;
+    origY: number;
+    moved: boolean;
+    dragScale: number;
+  } | null>(null);
   const { t } = useLanguage();
+
+  const isOpen = lightboxIndex !== null;
+
+  const reset = () => {
+    setScale(1);
+    setPos({ x: 0, y: 0 });
+  };
+
+  const openAt = (i: number) => {
+    setLightboxIndex(i);
+    reset();
+  };
+
+  const close = () => {
+    setLightboxIndex(null);
+    reset();
+  };
+
+  const zoomIn = () => setScale((s) => Math.min(4, +(s * 1.5).toFixed(2)));
+  const zoomOut = () => setScale((s) => Math.max(1, +(s / 1.5).toFixed(2)));
+
+  const next = () => {
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % images.length));
+    reset();
+  };
+
+  const prev = () => {
+    setLightboxIndex((i) =>
+      i === null ? i : (i - 1 + images.length) % images.length
+    );
+    reset();
+  };
+
+  // Keyboard: Esc close, panah kiri/kanan navigasi, +/- zoom, 0 reset
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+      else if (e.key === "+" || e.key === "=") zoomIn();
+      else if (e.key === "-") zoomOut();
+      else if (e.key === "0") reset();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, images.length]);
+
+  // Lock body scroll saat lightbox terbuka
+  useEffect(() => {
+    if (!isOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen]);
+
+  const maxPan = (s: number) => (s - 1) * 300;
+  const clamp = (v: number, max: number) => Math.max(-max, Math.min(max, v));
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      origX: pos.x,
+      origY: pos.y,
+      moved: false,
+      dragScale: scale,
+    };
+    setDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d) return;
+    const dx = e.clientX - d.startX;
+    const dy = e.clientY - d.startY;
+    if (Math.abs(dx) + Math.abs(dy) > 5) d.moved = true;
+    if (d.dragScale > 1) {
+      const m = maxPan(d.dragScale);
+      setPos({ x: clamp(d.origX + dx, m), y: clamp(d.origY + dy, m) });
+    }
+  };
+
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    dragRef.current = null;
+    setDragging(false);
+    if (!d) return;
+    // Scale 1: drag kiri/kanan = navigasi antar gambar project
+    if (d.dragScale === 1 && d.moved) {
+      const dx = e.clientX - d.startX;
+      if (dx < -40) next();
+      else if (dx > 40) prev();
+    }
+  };
+
+  const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY < 0) zoomIn();
+    else zoomOut();
+  };
 
   return (
     <>
@@ -53,7 +169,7 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
           <button
             key={index}
             className="w-1/4 cursor-pointer hover:opacity-80 transition-opacity border-0 p-0 bg-transparent"
-            onClick={() => setSelectedImg(src)}
+            onClick={() => openAt(index)}
           >
             <Image
               src={src}
@@ -66,30 +182,96 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
         ))}
       </div>
 
-      {/* Native dialog lightbox */}
-      {selectedImg && (
+      {isOpen && lightboxIndex !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
-          onClick={() => setSelectedImg(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+          onClick={close}
         >
           <div
-            className="relative max-w-4xl max-h-[90vh] w-full mx-4"
+            className="relative w-full h-full flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Toolbar: navigasi + zoom */}
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1 bg-[#00061b]/85 border border-[#39DFA3]/40 rounded-full px-3 py-1.5 backdrop-blur-sm shadow-lg">
+              <button
+                onClick={prev}
+                aria-label="Previous image"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
+              >
+                ‹
+              </button>
+              <span className="text-xs text-white/70 px-1 font-mono">
+                {lightboxIndex + 1} / {images.length}
+              </span>
+              <button
+                onClick={next}
+                aria-label="Next image"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-lg font-bold"
+              >
+                ›
+              </button>
+              <div className="w-px h-4 bg-white/20 mx-1" />
+              <button
+                onClick={zoomOut}
+                aria-label="Zoom out"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
+              >
+                −
+              </button>
+              <button
+                onClick={reset}
+                aria-label="Reset zoom"
+                className="px-2 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xs font-mono min-w-[3rem]"
+              >
+                {Math.round(scale * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                aria-label="Zoom in"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors text-xl font-bold"
+              >
+                +
+              </button>
+            </div>
+
+            {/* Close */}
             <button
-              onClick={() => setSelectedImg(null)}
-              className="absolute top-2 right-2 z-10 bg-[#39DFA3] text-[#00061b] rounded-full w-8 h-8 flex items-center justify-center font-bold hover:bg-[#5CE1E6] transition-colors"
+              onClick={close}
+              aria-label="Close lightbox"
+              className="absolute top-3 right-3 z-10 bg-[#E820B0] hover:bg-[#5CE1E6] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl font-bold transition-colors shadow-lg"
             >
               ✕
             </button>
-            <div className="border border-[#39DFA3] rounded-lg overflow-hidden">
+
+            {/* Image area — fullscreen, zoomable, draggable */}
+            <div
+              className="flex-1 flex items-center justify-center overflow-hidden select-none touch-none cursor-grab active:cursor-grabbing"
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
+              onWheel={onWheel}
+            >
               <Image
-                src={selectedImg}
-                alt={title}
-                width={900}
-                height={600}
-                className="w-full h-auto object-contain max-h-[85vh] bg-[#00061b]"
+                src={images[lightboxIndex]}
+                alt={`${title} ${lightboxIndex + 1}`}
+                width={1600}
+                height={1000}
+                draggable={false}
+                className={`max-w-full max-h-full w-auto h-auto object-contain ${
+                  dragging ? "" : "transition-transform duration-150 ease-out"
+                }`}
+                style={{
+                  transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+                }}
               />
+            </div>
+
+            {/* Hint */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] text-white/50 bg-black/60 rounded-full px-3 py-1 pointer-events-none whitespace-nowrap font-mono">
+              {scale > 1
+                ? "Drag untuk geser • Scroll / + − untuk zoom"
+                : "Geser kiri/kanan untuk navigasi • Scroll / + − untuk zoom"}
             </div>
           </div>
         </div>
