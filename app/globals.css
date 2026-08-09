@@ -58,6 +58,16 @@ body {
   font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
 }
 
+/* Cegah horizontal scroll phantom di level dokumen:
+   animasi GSAP slideInRight menempatkan header di x:300 saat load awal
+   (bisa digeser ke kiri di 3 detik pertama), dan .button-light ::after
+   memproyeksikan bounding box lebih lebar. Clip sumbu-X di root —
+   vertical scroll tetap normal, animasi slide-in tetap kelihatan. */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* ============================================================
    BACKGROUND LAYER (starfield / Neon bg image)
    ============================================================ */
