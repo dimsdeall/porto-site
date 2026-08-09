@@ -48,6 +48,8 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
   const [scale, setScale] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
+  // Arah animasi slide saat ganti gambar: 'right' = masuk dari kanan (next), 'left' = dari kiri (prev)
+  const [navDir, setNavDir] = useState<"right" | "left">("right");
   const dragRef = useRef<{
     startX: number;
     startY: number;
@@ -79,11 +81,13 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
   const zoomOut = () => setScale((s) => Math.max(1, +(s / 1.5).toFixed(2)));
 
   const next = () => {
+    setNavDir("right");
     setLightboxIndex((i) => (i === null ? i : (i + 1) % images.length));
     reset();
   };
 
   const prev = () => {
+    setNavDir("left");
     setLightboxIndex((i) =>
       i === null ? i : (i - 1 + images.length) % images.length
     );
@@ -221,19 +225,28 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
                 onPointerCancel={onPointerUp}
                 onWheel={onWheel}
               >
-                <Image
-                  src={images[lightboxIndex]}
-                  alt={`${title} ${lightboxIndex + 1}`}
-                  width={1600}
-                  height={1000}
-                  draggable={false}
-                  className={`max-w-full max-h-full w-auto h-auto object-contain ${
-                    dragging ? "" : "transition-transform duration-150 ease-out"
-                  }`}
-                  style={{
-                    transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
-                  }}
-                />
+                <div
+                  key={lightboxIndex}
+                  className={
+                    navDir === "right"
+                      ? "lightbox-slide-right"
+                      : "lightbox-slide-left"
+                  }
+                >
+                  <Image
+                    src={images[lightboxIndex]}
+                    alt={`${title} ${lightboxIndex + 1}`}
+                    width={1600}
+                    height={1000}
+                    draggable={false}
+                    className={`max-w-full max-h-full w-auto h-auto object-contain ${
+                      dragging ? "" : "transition-transform duration-150 ease-out"
+                    }`}
+                    style={{
+                      transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Toolbar navigasi + zoom — di BAWAH */}
@@ -338,11 +351,11 @@ const projects: ProjectItem[] = [
       { href: "https://retail.dimsdeall.my.id/", label: "retail.dimsdeall.my.id" },
     ],
     images: [
-      "/img/infotech-laravel/1.png",
-      "/img/infotech-laravel/2.png",
-      "/img/infotech-laravel/3.png",
-      "/img/infotech-laravel/4.png",
-      "/img/infotech-laravel/5.png",
+      "/img/example-retail/1.png",
+      "/img/example-retail/2.png",
+      "/img/example-retail/3.png",
+      "/img/example-retail/4.png",
+      "/img/example-retail/5.png",
     ],
   },
   {
