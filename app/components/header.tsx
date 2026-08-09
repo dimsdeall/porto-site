@@ -19,7 +19,7 @@ function Header({ onScroll }: HeaderProps) {
       <section
         ref={sectionRef}
         style={{ opacity: 0 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b] h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] gap-x-2"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 bg-[#00061b]/50 backdrop-blur-sm h-full py-5 px-5 sm:px-7 md:px-10 rounded-lg border border-[#F6D213] gap-x-2"
       >
         <div className="flex flex-col justify-center order-last md:order-first lg:col-span-2 gap gap-y-4">
           <div className="text-lg text-rainbow lg:text-3xl">{t("heyIm")}</div>

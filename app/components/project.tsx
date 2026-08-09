@@ -17,6 +17,7 @@ import {
   SiTailwindcss,
   SiTypescript,
   SiNextdotjs,
+  SiGo,
 } from "react-icons/si";
 import { useLanguage } from "../context/language-context";
 import { useGsapReveal } from "../hooks/use-gsap-reveal";
@@ -98,6 +99,31 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
 }
 
 const projects: ProjectItem[] = [
+  {
+    titleEn: "KanbanFlow",
+    titleId: "KanbanFlow",
+    descriptionEn:
+      "Full-stack project & task management app — drag-and-drop kanban board with 4 views (Board, Table, Timeline, Calendar), task dependencies, real-time collaboration via WebSocket, automation rules, public forms, portfolios & goals. Built with Next.js 16, Go backend, PostgreSQL, and Redis.",
+    descriptionId:
+      "Aplikasi manajemen proyek & tugas full-stack — papan kanban drag-and-drop dengan 4 tampilan (Papan, Tabel, Timeline, Kalender), dependensi tugas, kolaborasi real-time via WebSocket, aturan otomatisasi, form publik, portofolio & tujuan. Dibangun dengan Next.js 16, backend Go, PostgreSQL, dan Redis.",
+    techStack: [
+      { Icon: SiNextdotjs, label: "Next.js" },
+      { Icon: SiTypescript, label: "TypeScript" },
+      { Icon: SiTailwindcss, label: "Tailwind" },
+      { Icon: SiGo, label: "Go" },
+      { Icon: SiNodedotjs, label: "Node.js" },
+      { Icon: SiPostgresql, label: "PostgreSQL" },
+      { Icon: SiDocker, label: "Dockerize" },
+    ],
+    links: [
+      { href: "https://kanban.dimsdeall.my.id/", label: "kanban.dimsdeall.my.id" },
+    ],
+    images: [
+      "/img/kanban-flow/1.png",
+      "/img/kanban-flow/2.png",
+      "/img/kanban-flow/3.png",
+    ],
+  },
   {
     titleEn: "Example Retail",
     titleId: "Example Retail",
