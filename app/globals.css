@@ -104,6 +104,9 @@ body {
   box-shadow: 0 0 0.5em 0.25em var(--glow-color);
   text-shadow: 0 0 0.5em var(--glow-color);
   position: relative;
+  /* Proyeksi 3D perspective dari ::after (glow floor) melebarkan bounding box
+     ke kanan > viewport → horizontal scroll phantom di mobile. Klip sumbu-X saja. */
+  overflow-x: clip;
   transition: all 0.3s;
   cursor: pointer;
   animation: sun-shine 2.5s ease-in-out infinite;

@@ -58,6 +58,7 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
     moved: boolean;
     dragScale: number;
   } | null>(null);
+  const wheelAreaRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
 
   const isOpen = lightboxIndex !== null;
@@ -161,19 +162,27 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
     }
   };
 
-  const onWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    // Saat zoom: scroll = geser gambar (vertikal; Shift / trackpad = horizontal)
-    if (scale > 1) {
-      const dx = e.shiftKey ? -e.deltaY : -e.deltaX;
-      const dy = e.shiftKey ? 0 : -e.deltaY;
-      const m = maxPan(scale);
-      setPos((p) => ({ x: clamp(p.x + dx, m), y: clamp(p.y + dy, m) }));
-    } else if (e.deltaY < 0) {
-      zoomIn();
-    } else {
-      zoomOut();
-    }
-  };
+  // Wheel native (non-passive) supaya preventDefault jalan:
+  // scroll biasa = geser gambar, Ctrl/Cmd + scroll = zoom (browser zoom halaman di-block)
+  useEffect(() => {
+    if (!isOpen) return;
+    const el = wheelAreaRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (e.ctrlKey || e.metaKey) {
+        if (e.deltaY < 0) zoomIn();
+        else zoomOut();
+      } else {
+        const dx = e.shiftKey ? -e.deltaY : -e.deltaX;
+        const dy = e.shiftKey ? 0 : -e.deltaY;
+        const m = maxPan(scale);
+        setPos((p) => ({ x: clamp(p.x + dx, m), y: clamp(p.y + dy, m) }));
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [isOpen, scale]);
 
   return (
     <>
@@ -218,12 +227,12 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
 
               {/* Image area — fullscreen, zoomable, draggable */}
               <div
+                ref={wheelAreaRef}
                 className="flex-1 flex items-center justify-center overflow-hidden select-none touch-none cursor-grab active:cursor-grabbing"
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
                 onPointerCancel={onPointerUp}
-                onWheel={onWheel}
               >
                 <div
                   key={lightboxIndex}
@@ -295,8 +304,8 @@ function PhotoGallery({ images, title }: { images: string[]; title: string }) {
               {/* Hint */}
               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-[11px] text-white/50 bg-black/60 rounded-full px-3 py-1 pointer-events-none whitespace-nowrap font-mono">
                 {scale > 1
-                  ? "Scroll untuk geser • Drag untuk pan • + − zoom"
-                  : "Geser kiri/kanan untuk navigasi • Scroll / + − untuk zoom"}
+                  ? "Scroll untuk geser • Ctrl+Scroll / + − untuk zoom"
+                  : "Geser kiri/kanan untuk navigasi • Ctrl+Scroll / + − untuk zoom"}
               </div>
             </div>
           </div>,
